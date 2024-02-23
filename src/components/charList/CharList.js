@@ -34,7 +34,7 @@ const CharList = (props) => {
     //     setNewItemLoading(true);
     // }
 
-    const onCharListLoaded = (newCharList) => {
+    const onCharListLoaded = async (newCharList) => {
         let ended = false;
         if (newCharList.length < 9) {
             ended = true;
@@ -43,7 +43,7 @@ const CharList = (props) => {
         setCharList(charList => [...charList, ...newCharList]);
         // setLoading(false);
         setNewItemLoading(false);
-        setOffset(offset => offset + 9);
+        setOffset(offset + 9);
         setCharEnded(ended);
     }
 
@@ -72,6 +72,7 @@ const CharList = (props) => {
 
     function renderItems(arr){     
         const items = arr.map((item, i) => {
+          
             let imgFit = {'objectFit': 'cover'};
             if (item.imgStyle){
                 imgFit = {'objectFit': 'unset'}
@@ -79,6 +80,7 @@ const CharList = (props) => {
         
             return (
                 <li className="char__item"
+                tabIndex={0}                
                 key = {item.id}
                 ref={el => itemRefs.current[i] = el}
                 onClick={() => {

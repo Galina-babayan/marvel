@@ -1,54 +1,68 @@
 import { useParams, Link } from 'react-router-dom';
 import { Component, useState, useEffect } from 'react';
+import { Helmet } from "react-helmet";
+
 
 import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
+import AppBanner from '../appBanner/AppBanner';
 
 import './singleComicsPage.scss';
 
-const SingleComicsPage = () => {
-    const {comicsId} = useParams();
-    const [comics, setComics] = useState(null);
+const SingleComicsPageLayout = () => {
+    const {id} = useParams();
+    const [data, setData] = useState(null);
     const {loading, error, getComics, clearError} = useMarvelService();
 
     useEffect(() => {
-        updateComics();
-    }, [comicsId]);   
+        updateItem();
+    }, [id]);   
  
 
-    const updateComics = () => {
+    const updateItem = () => {
         clearError();
         // onCharLoading();
 
-        getComics(comicsId)
-            .then(onComicsLoaded);
+        getComics(id)
+            .then(onItemLoaded);
                         
     }
 
-    const onComicsLoaded = (comics) => {
-        setComics(comics);
+    const onItemLoaded = (data) => {
+        setData(data);
         // setLoading(false);   
     }
 
     const errorMessage = error ? <ErrorMessage/> : null;     
     const spinner = loading ? <Spinner/> : null;
-    const content = !(loading || error || !comics) ? <View comics = {comics}/> : null;
-
-    return (
-        <div className="single-comic">
-            {errorMessage}
-            {spinner}
-            {content} 
-        </div>
-    )
-}
-
-const View = ({comics}) => {
-    const {title, description, pageCount, thumbnail, language, price} = comics;
+    const content = !(loading || error || !data) ? <View data = {data}/> : null;
 
     return (
         <>
+    
+            <AppBanner/>       
+            <div className="single-comic">
+                {errorMessage}
+                {spinner}
+                {content} 
+            </div>
+        </>
+    )
+}
+
+const View = ({data}) => {
+    const {title, description, pageCount, thumbnail, language, price} = data;
+
+    return (
+        <>
+            <Helmet>
+                <meta
+                    name="description"
+                    content={`${title} comics book`}
+                />
+                <title>{title}</title>
+            </Helmet>
             <img src={thumbnail} alt={title} className="single-comic__img"/>
             <div className="single-comic__info">
                 <h2 className="single-comic__name">{title}</h2>
@@ -62,4 +76,4 @@ const View = ({comics}) => {
     )
 }
 
-export default SingleComicsPage;
+export default SingleComicsPageLayout;

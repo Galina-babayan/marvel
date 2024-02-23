@@ -18,7 +18,7 @@ const RandomChar = () => {
     // const {loading} = useMarvelService();
 
     useEffect(() => {
-        console.log('effect')
+        // console.log('effect')
         updateChar();
         const timerId = setInterval(updateChar, 60000);
         

@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import RandomChar from "../randomChar/RandomChar";
 import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
+import FormChar from "../form/FormChar";
+import FormCharFormik from "../form/FormCharFormik";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 
 import decoration from '../../resources/img/vision.png';
@@ -16,16 +19,29 @@ const MainPage =() => {
 
     return (
         <>
+            <Helmet>
+                <meta
+                    name="description"
+                    content="Marvel information portal"
+                />
+                <title>Marvel information portal</title>
+            </Helmet>
             <ErrorBoundary>
                 <RandomChar/>
-            </ErrorBoundary>                    
+            </ErrorBoundary>                       
             <div className="char__content"> 
                 <ErrorBoundary>
                     <CharList onCharSelected={onCharSelected}/>
-                </ErrorBoundary>                       
-                <ErrorBoundary>
-                    <CharInfo charId={selectedChar}/>
-                </ErrorBoundary>                        
+                </ErrorBoundary>  
+                <div>
+                    <ErrorBoundary>
+                        <CharInfo charId={selectedChar}/>                   
+                    </ErrorBoundary> 
+                    <ErrorBoundary>
+                        <FormCharFormik/>                   
+                    </ErrorBoundary> 
+                </div>                     
+                                  
              </div>                       
             <img className="bg-decoration" src={decoration} alt="vision"/>
         </>

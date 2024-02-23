@@ -6,6 +6,14 @@
     grid-template-columns: 293px 550px auto;
     column-gap: 50px;
     align-items: start;
+    &__top {
+        display: flex;
+        background-color: black;
+        &-right{
+            display: flex;
+            justify-content: space-around;
+        }
+    }
     &__img {
         width: 293px;
         height: 450px;
@@ -28,7 +36,7 @@
         margin-top: 25px;
     }
     &__back {
-        justify-self: end;
+        justify-self: end;       
         font-weight: bold;
         font-size: 18px;
         line-height: 24px;
